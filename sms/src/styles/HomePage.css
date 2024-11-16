@@ -1,0 +1,37 @@
+.home-page {
+	text-align: center;
+	margin: 50px auto;
+	font-family: Arial, sans-serif;
+}
+
+.auth-switch-container {
+	max-width: 400px;
+	margin: 0 auto;
+}
+
+.auth-toggle {
+	display: flex;
+	justify-content: center;
+	margin-bottom: 20px;
+}
+
+.auth-toggle button {
+	padding: 10px 20px;
+	font-size: 16px;
+	margin: 0 5px;
+	cursor: pointer;
+}
+
+.auth-toggle button.active {
+	background-color: #007bff;
+	color: white;
+	border: none;
+	border-radius: 4px;
+}
+
+.auth-toggle button:not(.active) {
+	background-color: #f1f1f1;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	color: #333;
+}
