@@ -53,12 +53,20 @@ const Register = ({ onRegisterSuccess }) => {
 		}
 		setValidationErrors([]);
 		try {
-			await register(formData);
-			alert("Rejestracja zakończona sukcesem!");
+			const response = await register(formData);
 			if (onRegisterSuccess) onRegisterSuccess();
 		} catch (err) {
 			console.error("Błąd rejestracji:", err);
-			setError("Rejestracja nie powiodła się. Spróbuj ponownie.");
+			if (err.response && err.response.data.errors) {
+				// Przykład obsługi błędu dla zduplikowanego emaila
+				if (err.response.data.errors.DuplicateEmail) {
+					setError("Podany adres email jest już zajęty.");
+				} else {
+					setError("Rejestracja nie powiodła się. Spróbuj ponownie.");
+				}
+			} else {
+				setError("Rejestracja nie powiodła się. Spróbuj ponownie.");
+			}
 		}
 	};
 
