@@ -1,0 +1,91 @@
+/* src/styles/components/Settings.css */
+
+.settings-page {
+	position: relative;
+	padding: 20px;
+}
+
+.back-button {
+	position: absolute;
+	top: 20px;
+	left: 20px;
+	background-color: #4eb0ed;
+	color: #ffffff;
+	border: none;
+	padding: 8px 16px;
+	border-radius: 4px;
+	cursor: pointer;
+	font-size: 14px;
+	width: auto; /* Zmniejszenie szerokości przycisku */
+}
+
+.back-button:hover {
+	background-color: #ad8f65;
+}
+
+.settings-container {
+	background-color: #1c1c1c;
+	color: #ffffff;
+	padding: 20px;
+	border-radius: 8px;
+	margin: 60px auto 20px;
+	max-width: 600px;
+}
+
+.settings-section {
+	background-color: #363e43;
+	padding: 20px;
+	border-radius: 8px;
+	margin-bottom: 20px;
+}
+
+h2 {
+	color: #4eb0ed;
+	margin-bottom: 10px;
+}
+
+.change-password-form {
+	display: flex;
+	flex-direction: column;
+}
+
+label {
+	margin-top: 10px;
+	margin-bottom: 5px;
+	font-weight: bold;
+}
+
+input {
+	background-color: #2d2d2d;
+	color: #ffffff;
+	border: 1px solid #658498;
+	padding: 10px;
+	border-radius: 4px;
+	margin-bottom: 16px;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+button {
+	background-color: #4eb0ed;
+	color: #ffffff;
+	padding: 10px;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	width: 100%;
+}
+
+button:hover {
+	background-color: #ad8f65;
+}
+
+.success-message {
+	color: #4eb0ed;
+	margin-top: 10px;
+}
+
+.error-message {
+	color: #ed4e4e;
+	margin-top: 10px;
+}
