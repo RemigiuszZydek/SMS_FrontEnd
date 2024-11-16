@@ -1,0 +1,32 @@
+/* src/styles/Dashboard.css */
+
+.dashboard-container {
+	background-color: #1c1c1c;
+	color: #ffffff;
+	padding: 20px;
+	border-radius: 8px;
+	margin: 20px;
+	text-align: center;
+}
+
+.dashboard-windows {
+	display: flex;
+	justify-content: space-around;
+	margin-top: 20px;
+}
+
+.window {
+	background-color: #363e43;
+	color: #ffffff;
+	border-radius: 8px;
+	padding: 20px;
+	width: 200px;
+	cursor: pointer;
+	transition: transform 0.2s;
+	text-align: center;
+}
+
+.window:hover {
+	transform: translateY(-5px);
+	background-color: #4eb0ed;
+}
