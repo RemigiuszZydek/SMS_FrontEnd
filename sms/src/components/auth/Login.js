@@ -1,15 +1,13 @@
 import React, { useState } from "react";
 import { signIn } from "../../api/authService";
 import "../../styles/components/auth/Login.css";
+import { useNavigate } from "react-router-dom";
 
-const Login = ({ onLoginSuccess }) => {
-	const [formData, setFormData] = useState({
-		email: "",
-		password: "",
-	});
-
+const Login = () => {
+	const [formData, setFormData] = useState({ email: "", password: "" });
 	const [error, setError] = useState("");
 	const [validationErrors, setValidationErrors] = useState([]);
+	const navigate = useNavigate();
 
 	// Walidacja formularza
 	const validateForm = () => {
@@ -27,10 +25,7 @@ const Login = ({ onLoginSuccess }) => {
 	// Obsługa zmiany wartości w formularzu
 	const handleChange = (e) => {
 		const { name, value } = e.target;
-		setFormData({
-			...formData,
-			[name]: value,
-		});
+		setFormData({ ...formData, [name]: value });
 	};
 
 	// Obsługa wysyłania formularza
@@ -45,10 +40,13 @@ const Login = ({ onLoginSuccess }) => {
 		try {
 			const response = await signIn(formData);
 			console.log(response);
-			localStorage.setItem("accessToken", response.accessToken);
-			localStorage.setItem("refreshToken", response.refreshToken);
-			alert("Zalogowano pomyślnie!");
-			if (onLoginSuccess) onLoginSuccess();
+
+			// Zapisz tokeny w localStorage
+			localStorage.setItem("accessToken", response.data.accessToken);
+			localStorage.setItem("refreshToken", response.data.refreshToken);
+
+			// Przekierowanie na Dashboard
+			navigate("/dashboard");
 		} catch (err) {
 			console.error("Błąd logowania:", err);
 			setError(
