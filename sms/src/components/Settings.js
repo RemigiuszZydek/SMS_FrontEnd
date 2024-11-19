@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import config from '../config';
 import { refreshAuthToken } from "../api/authService";
+import Api from "../api/Api";
 import "../styles/components/Settings.css";
 
 const Settings = () => {
@@ -16,19 +18,12 @@ const Settings = () => {
 
 	const handlePasswordChange = async (e) => {
 		e.preventDefault();
-		const token = localStorage.getItem("authToken");
-
 		try {
-			const response = await axios.post(
-				"https://localhost:7099/api/auth/change-password",
-				{ currentPassword, newPassword },
-				{
-					headers: {
-						"Content-Type": "application/json",
-						Authorization: `Bearer ${token}`,
-					},
-				}
-			);
+			
+			const response = await Api.post(`${config.apiUrl}auth/change-password`, {
+				currentPassword,
+				newPassword,
+			  });
 
 			if (response.status === 200) {
 				setPasswordMessage("Hasło zostało zmienione pomyślnie.");
