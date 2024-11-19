@@ -5,6 +5,9 @@ import Dashboard from "./components/Dashboard";
 import Settings from "./components/Settings";
 import Salon from "./components/salon/Salon";
 import CreateSalon from "./components/salon/CreateSalon";
+import Employee from "./components/employee/Employees";
+import Services from "./components/services/Services";
+import Products from "./components/products/Products";
 
 function App() {
 	return (
@@ -17,6 +20,9 @@ function App() {
 				<Route path="/invoices" element={<div>Faktury</div>} />
 				<Route path="/salon" element={<Salon />} />
 				<Route path="/salons/create" element={<CreateSalon />} />
+				<Route path="/employe" element={<Employee />} />
+				<Route path="/services" element={<Services />} />
+				<Route path="/services" element={<Products />} />
 			</Routes>
 		</Router>
 	);
