@@ -52,3 +52,20 @@ button:hover {
 	font-size: 14px;
 	margin: 4px 0;
 }
+
+.forgot-password-button,
+.back-to-login-button {
+	background-color: #4eb0ed; /* Kolor przycisku */
+	color: #fff;
+	border: none;
+	padding: 5px 10px;
+	border-radius: 4px;
+	cursor: pointer;
+	font-size: 14px;
+	margin-top: 10px;
+}
+
+.forgot-password-button:hover,
+.back-to-login-button:hover {
+	background-color: #ad8f65; /* Kolor przycisku po najechaniu */
+}

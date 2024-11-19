@@ -38,3 +38,27 @@ export const signIn = async (formData) => {
 		throw new Error("Logowanie nie powiodło się.");
 	}
 };
+
+export const sendResetPasswordToken = async ({ email, newPassword }) => {
+	try {
+		const response = await axios.post(
+			`${API_URL}/api/auth/send-reset-password-token`,
+			{
+				email,
+				newPassword,
+			},
+			{
+				headers: {
+					"Content-Type": "application/json",
+				},
+			}
+		);
+		return response.data;
+	} catch (error) {
+		console.error(
+			"Błąd wysyłania tokena resetowania hasła:",
+			error.response || error
+		);
+		throw error;
+	}
+};
