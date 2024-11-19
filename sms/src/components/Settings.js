@@ -43,15 +43,11 @@ const Settings = () => {
 			});
 
 			if (response.status === 200) {
-				setEmailMessage(
-					"Link do potwierdzenia zmiany adresu e-mail został wysłany."
-				);
+				setEmailMessage("Link do potwierdzenia zmiany adresu e-mail został wysłany.");
 				setEmailError("");
 			}
 		} catch (error) {
-			setEmailError(
-				"Błąd przy wysyłaniu linku zmiany e-maila. Spróbuj ponownie."
-			);
+			setEmailError("Błąd przy wysyłaniu linku zmiany e-maila. Spróbuj ponownie.");
 			setEmailMessage("");
 			console.error("Błąd:", error);
 		}
