@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import config from '../config';
-import { refreshAuthToken } from "../api/authService";
 import Api from "../api/Api";
 import "../styles/components/Settings.css";
 
@@ -16,7 +14,7 @@ const Settings = () => {
 	const [emailError, setEmailError] = useState("");
 	const navigate = useNavigate();
 
-	const handlePasswordChange = async (e) => {
+	const handlePasswordChange = async (e) => { //przenieś do auth
 		e.preventDefault();
 		try {
 			
@@ -36,21 +34,13 @@ const Settings = () => {
 		}
 	};
 
-	const handleEmailChange = async (e) => {
+	const handleEmailChange = async (e) => { //przenieś do auth
 		e.preventDefault();
-		const token = localStorage.getItem("accessToken");
-
 		try {
-			const response = await axios.post(
-				"https://localhost:7099/api/auth/send-confirmation-change-email",
-				{ newEmail },
-				{
-					headers: {
-						"Content-Type": "application/json",
-						Authorization: `Bearer ${token}`,
-					},
-				}
-			);
+			const response = await Api.post(`${config.apiUrl}auth/send-confirmation-change-email`,
+			{
+				newEmail
+			});
 
 			if (response.status === 200) {
 				setEmailMessage(
@@ -59,17 +49,11 @@ const Settings = () => {
 				setEmailError("");
 			}
 		} catch (error) {
-			if (error.response && error.response.status === 401) {
-				console.log(token);
-				await refreshAuthToken();
-				handleEmailChange(e);
-			} else {
-				setEmailError(
-					"Błąd przy wysyłaniu linku zmiany e-maila. Spróbuj ponownie."
-				);
-				setEmailMessage("");
-				console.error("Błąd:", error);
-			}
+			setEmailError(
+				"Błąd przy wysyłaniu linku zmiany e-maila. Spróbuj ponownie."
+			);
+			setEmailMessage("");
+			console.error("Błąd:", error);
 		}
 	};
 
