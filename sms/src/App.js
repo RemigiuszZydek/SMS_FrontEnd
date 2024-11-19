@@ -15,9 +15,7 @@ function App() {
 			<Routes>
 				<Route path="/" element={<HomePage />} />
 				<Route path="/dashboard" element={<Dashboard />} />
-				<Route path="/profile" element={<div>Profil</div>} />
 				<Route path="/settings" element={<Settings />} />
-				<Route path="/invoices" element={<div>Faktury</div>} />
 				<Route path="/salon" element={<Salon />} />
 				<Route path="/salons/create" element={<CreateSalon />} />
 				<Route path="/employe" element={<Employee />} />
