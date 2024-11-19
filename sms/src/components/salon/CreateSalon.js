@@ -19,7 +19,7 @@ const CreateSalon = () => {
 				{
 					headers: {
 						"Content-Type": "application/json",
-						Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+						Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
 					},
 				}
 			);
@@ -31,12 +31,24 @@ const CreateSalon = () => {
 			}
 		} catch (error) {
 			console.error("Błąd przy tworzeniu salonu:", error);
+			if (error.response) {
+				console.error("Dane odpowiedzi:", error.response.data);
+				console.error("Status:", error.response.status);
+				console.error("Nagłówki:", error.response.headers);
+			} else if (error.request) {
+				console.error(
+					"Żądanie zostało wysłane, ale brak odpowiedzi:",
+					error.request
+				);
+			} else {
+				console.error("Błąd konfiguracji żądania:", error.message);
+			}
 			setMessage("Wystąpił problem podczas tworzenia salonu.");
 		}
 	};
 
 	const handleCancel = () => {
-		navigate(-1); // Przejście na stronę poprzednią
+		navigate(-1);
 	};
 
 	return (

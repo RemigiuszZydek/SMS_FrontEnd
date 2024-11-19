@@ -1,0 +1,49 @@
+.salon-list-container {
+	max-width: 600px;
+	margin: 40px auto;
+	padding: 20px;
+	background-color: #1c1c1c; /* Ciemne tło */
+	color: #ffffff; /* Jasny tekst */
+	border-radius: 8px;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+h2 {
+	color: #4eb0ed; /* Niebieski */
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+ul {
+	list-style-type: none;
+	padding: 0;
+}
+
+li {
+	background-color: #363e43; /* Ciemnoszare tło dla listy */
+	padding: 10px;
+	margin-bottom: 10px;
+	border-radius: 4px;
+	border: 1px solid #658498; /* Ciemny niebieski */
+}
+
+button {
+	background-color: #4eb0ed; /* Niebieski przycisk */
+	color: #ffffff;
+	padding: 10px 15px;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	font-size: 16px;
+	margin-top: 20px;
+}
+
+button:hover {
+	background-color: #ad8f65; /* Złoty */
+}
+
+p {
+	text-align: center;
+	color: #ad8f65; /* Złoty tekst dla komunikatu */
+	margin-top: 20px;
+}

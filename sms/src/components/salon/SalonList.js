@@ -10,12 +10,15 @@ const SalonList = () => {
 	useEffect(() => {
 		const fetchSalons = async () => {
 			try {
-				const response = await axios.get("https://localhost:7099/api/salons", {
-					headers: {
-						Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-					},
-				});
-				setSalons(response.data);
+				const response = await axios.get(
+					"https://localhost:7099/api/salon/list",
+					{
+						headers: {
+							Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+						},
+					}
+				);
+				setSalons(response.data.data); // Pobierz listę salonów z odpowiedzi
 			} catch (error) {
 				console.error("Błąd podczas pobierania salonów:", error);
 			}
