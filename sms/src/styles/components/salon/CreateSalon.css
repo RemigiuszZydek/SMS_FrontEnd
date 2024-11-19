@@ -1,0 +1,49 @@
+.create-salon-container {
+	max-width: 500px;
+	margin: 40px auto;
+	padding: 20px;
+	background-color: #1c1c1c; /* Ciemne tło */
+	color: #ffffff; /* Jasny tekst */
+	border-radius: 8px;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.create-salon-container h2 {
+	color: #4eb0ed; /* Niebieski */
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+form {
+	display: flex;
+	flex-direction: column;
+}
+
+input {
+	background-color: #363e43; /* Ciemnoszare tło */
+	color: #ffffff;
+	border: 1px solid #658498; /* Ciemny niebieski */
+	padding: 10px;
+	border-radius: 4px;
+	margin-bottom: 15px;
+}
+
+button {
+	background-color: #4eb0ed;
+	color: #ffffff;
+	padding: 10px;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	font-size: 16px;
+}
+
+button:hover {
+	background-color: #ad8f65; /* Złoty */
+}
+
+.message {
+	text-align: center;
+	margin-top: 15px;
+	color: #edab4e; /* Pomarańczowy */
+}

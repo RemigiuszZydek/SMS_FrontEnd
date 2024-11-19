@@ -21,6 +21,10 @@ const Dashboard = () => {
 					<h2>Faktury</h2>
 					<p>Przeglądaj swoje faktury</p>
 				</div>
+				<div className="window" onClick={() => navigate("/salon")}>
+					<h2>Salon</h2>
+					<p>Zarządzaj salonami</p>
+				</div>
 			</div>
 		</div>
 	);
