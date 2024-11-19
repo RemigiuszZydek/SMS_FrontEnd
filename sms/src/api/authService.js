@@ -62,3 +62,25 @@ export const sendResetPasswordToken = async ({ email, newPassword }) => {
 		throw error;
 	}
 };
+
+export const refreshAuthToken = async () => {
+	const refreshToken = localStorage.getItem("refreshToken");
+	try {
+		const response = await axios.post(
+			`${API_URL}/api/auth/refresh`,
+			{
+				accessToken: localStorage.getItem("accessToken"),
+				refreshToken,
+			},
+			{
+				headers: {
+					"Content-Type": "application/json",
+				},
+			}
+		);
+		localStorage.setItem("accessToken", response.data.accessToken);
+		localStorage.setItem("refreshToken", response.data.refreshToken);
+	} catch (error) {
+		console.error("Błąd przy odświeżaniu tokena:", error);
+	}
+};
