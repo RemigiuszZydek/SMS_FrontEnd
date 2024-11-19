@@ -42,6 +42,10 @@ const Login = () => {
 			const response = await signIn(formData);
 			localStorage.setItem("accessToken", response.data.accessToken);
 			localStorage.setItem("refreshToken", response.data.refreshToken);
+			localStorage.setItem(
+				"accessTokenExpiration",
+				response.data.accessTokenExpiration
+			);
 			navigate("/dashboard");
 		} catch (err) {
 			console.error("Błąd logowania:", err);

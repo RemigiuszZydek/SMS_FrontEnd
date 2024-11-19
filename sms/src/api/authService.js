@@ -63,6 +63,16 @@ export const sendResetPasswordToken = async ({ email, newPassword }) => {
 	}
 };
 
+const scheduleTokenRefresh = (expirationTime) => {
+	const expirationDate = new Date(expirationTime);
+	const currentTime = new Date();
+	const timeToRefresh = expirationDate - currentTime - 60 * 1000;
+
+	if (timeToRefresh > 0) {
+		setTimeout(refreshAuthToken, timeToRefresh);
+	}
+};
+
 export const refreshAuthToken = async () => {
 	const refreshToken = localStorage.getItem("refreshToken");
 	try {
@@ -80,6 +90,12 @@ export const refreshAuthToken = async () => {
 		);
 		localStorage.setItem("accessToken", response.data.accessToken);
 		localStorage.setItem("refreshToken", response.data.refreshToken);
+		localStorage.setItem(
+			"accessTokenExpiration",
+			response.data.accessTokenExpiration
+		);
+
+		scheduleTokenRefresh(response.data.accessTokenExpiration);
 	} catch (error) {
 		console.error("Błąd przy odświeżaniu tokena:", error);
 	}
