@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import Api from "../../api/Api";
+import config from "../../config";
 import "../../styles/components/salon/SalonList.css";
 
 const SalonList = () => {
@@ -10,15 +11,8 @@ const SalonList = () => {
 	useEffect(() => {
 		const fetchSalons = async () => {
 			try {
-				const response = await axios.get(
-					"https://localhost:7099/api/salon/list",
-					{
-						headers: {
-							Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-						},
-					}
-				);
-				setSalons(response.data.data); // Pobierz listę salonów z odpowiedzi
+				const response = await Api.get(`${config.apiUrl}salon/list`);
+				setSalons(response.data.data);
 			} catch (error) {
 				console.error("Błąd podczas pobierania salonów:", error);
 			}
