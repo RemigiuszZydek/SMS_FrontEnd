@@ -27,12 +27,20 @@ const SalonList = () => {
 				<p>Brak salonów. Kliknij, aby dodać nowy salon.</p>
 			) : (
 				<ul>
-					{salons.map((salon) => (
-						<li key={salon.id}>{salon.name}</li>
-					))}
+					{salons.map((salon) => {
+						return (
+							<li
+								key={salon.id}
+								className="salon-item"
+								onClick={() => navigate(`/salon/${salon.id}`)}
+							>
+								{salon.name}
+							</li>
+						);
+					})}
 				</ul>
 			)}
-			<button onClick={() => navigate("/salons/create")}>Dodaj Salon</button>
+			<button onClick={() => navigate("/salon/create")}>Dodaj Salon</button>
 		</div>
 	);
 };

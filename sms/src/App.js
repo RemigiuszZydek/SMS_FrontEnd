@@ -8,6 +8,7 @@ import CreateSalon from "./components/salon/CreateSalon";
 import Employee from "./components/employee/Employees";
 import Services from "./components/services/Services";
 import Products from "./components/products/Products";
+import SalonList from "./components/salon/SalonList";
 
 function App() {
 	return (
@@ -16,11 +17,12 @@ function App() {
 				<Route path="/" element={<HomePage />} />
 				<Route path="/dashboard" element={<Dashboard />} />
 				<Route path="/settings" element={<Settings />} />
-				<Route path="/salon" element={<Salon />} />
-				<Route path="/salons/create" element={<CreateSalon />} />
+				<Route path="/salon" element={<SalonList />} />
+				<Route path="/salon/create" element={<CreateSalon />} />
 				<Route path="/employe" element={<Employee />} />
 				<Route path="/services" element={<Services />} />
 				<Route path="/services" element={<Products />} />
+				<Route path="/salon/:salonId" element={<Salon />} />
 			</Routes>
 		</Router>
 	);

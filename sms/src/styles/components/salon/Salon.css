@@ -1,10 +1,81 @@
-.salon-container {
+.salon-details-container {
+	background-color: #1c1c1c;
+	color: #ffffff;
 	padding: 20px;
+	border-radius: 8px;
+	margin: 20px auto;
+	max-width: 600px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.add-salon-button {
+.salon-details-container h2 {
+	color: #4eb0ed;
+	margin-bottom: 20px;
+}
+
+.salon-details-container p {
+	margin: 10px 0;
+	font-size: 1.1em;
+}
+
+/* Tryb edycji: formularz */
+.edit-form {
+	display: flex;
+	flex-direction: column; /* Pola w kolumnie */
+	background-color: #2a2a2a; /* Nieco jaśniejsze tło dla edycji */
+	padding: 20px;
+	border-radius: 8px;
 	margin-top: 20px;
+}
+
+/* Pola wejściowe w trybie edycji */
+.edit-form input,
+.edit-form textarea {
+	background-color: #363e43; /* Tło pola */
+	color: #ffffff; /* Tekst w polu */
+	border: 1px solid #4eb0ed; /* Niebieskie obramowanie */
+	padding: 10px; /* Odstępy wewnętrzne */
+	border-radius: 4px; /* Zaokrąglone rogi */
+	margin-bottom: 16px; /* Odstęp od innych pól */
+	font-size: 1em; /* Rozmiar tekstu */
+	width: 100%; /* Szerokość dostosowana do kontenera */
+	min-height: 80px; /* Minimalna wysokość pola */
+	line-height: 1.5; /* Odstępy między liniami tekstu */
+	resize: vertical; /* Możliwość zmiany rozmiaru tylko w pionie */
+	box-sizing: border-box; /* Uwzględnienie paddingu w szerokości */
+}
+
+/* Przycisk w trybie edycji */
+.edit-form .buttons button {
+	background-color: #4eb0ed; /* Niebieskie przyciski */
+	color: #ffffff;
 	padding: 10px 15px;
-	font-size: 16px;
+	border: none;
+	border-radius: 4px;
 	cursor: pointer;
+	font-size: 1em;
+	margin-right: 10px; /* Odstęp między przyciskami */
+}
+
+/* Efekt najechania na przycisk */
+.edit-form .buttons button:hover {
+	background-color: #ad8f65; /* Złoty po najechaniu */
+}
+
+/* Anulowanie w trybie edycji */
+.edit-form .buttons .cancel-button {
+	background-color: #755830; /* Brązowy przycisk anulowania */
+}
+
+/* Efekt najechania na przycisk anulowania */
+.edit-form .buttons .cancel-button:hover {
+	background-color: #edab4e; /* Jaśniejszy brązowy po najechaniu */
+}
+
+.edit-form label {
+	display: flex;
+	flex-direction: column;
+	color: #ffffff;
+	font-size: 1em;
+	margin-bottom: 8px;
 }
