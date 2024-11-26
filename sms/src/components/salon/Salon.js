@@ -4,39 +4,48 @@ import Api from "../../api/Api";
 import config from "../../config";
 import "../../styles/components/salon/Salon.css";
 
+const daysOfWeek = [
+	"Poniedziałek",
+	"Wtorek",
+	"Środa",
+	"Czwartek",
+	"Piątek",
+	"Sobota",
+	"Niedziela",
+];
+
 const Salon = () => {
 	const { salonId } = useParams();
 	const [salon, setSalon] = useState(null);
+	const [openingHours, setOpeningHours] = useState([]);
 	const [error, setError] = useState("");
-	const [isEditing, setIsEditing] = useState(false);
-	const [editDetails, setEditDetails] = useState({
-		name: "",
-		email: "",
-		phoneNumber: "",
-		description: "",
+	const [editedHour, setEditedHour] = useState({
+		dayOfWeek: null,
+		openingTime: "",
+		closingTime: "",
 	});
 
 	useEffect(() => {
 		const fetchSalonDetails = async () => {
 			try {
+				console.log("Fetching salon details...");
 				const response = await Api.get(`${config.apiUrl}salon/${salonId}`, {
 					headers: {
 						Authorization: `Bearer ${localStorage.getItem("authToken")}`,
 					},
 				});
+				console.log("Salon details response:", response.data);
 				setSalon(response.data.data);
-				setEditDetails({
-					name: response.data.data.name || "",
-					email: response.data.data.email || "",
-					phoneNumber: response.data.data.phoneNumber || "",
-					description: response.data.data.description || "",
-				});
+				setOpeningHours(response.data.data.openingHours || []);
 			} catch (error) {
 				if (error.response) {
+					console.error("Error fetching salon details:", error.response.data);
 					setError(`Błąd: ${error.response.status}`);
 				} else if (error.request) {
+					console.error("No response from server:", error.request);
 					setError("Problem z połączeniem z serwerem.");
 				} else {
+					console.error("Unexpected error:", error.message);
 					setError("Nieoczekiwany błąd.");
 				}
 			}
@@ -44,45 +53,115 @@ const Salon = () => {
 		fetchSalonDetails();
 	}, [salonId]);
 
-	const handleEditToggle = () => {
-		setIsEditing(!isEditing);
+	const handleEditOpeningHour = (dayOfWeek) => {
+		const hour = openingHours.find((h) => h.dayOfWeek === dayOfWeek);
+		console.log(`Editing opening hours for dayOfWeek: ${dayOfWeek}`, hour);
+		setEditedHour({
+			dayOfWeek,
+			openingTime: hour ? hour.openingTime : "09:00:00",
+			closingTime: hour ? hour.closingTime : "17:00:00",
+		});
 	};
 
 	const handleInputChange = (e) => {
 		const { name, value } = e.target;
-		setEditDetails((prevDetails) => ({
-			...prevDetails,
+		console.log(`Changing input ${name}:`, value);
+		setEditedHour((prev) => ({
+			...prev,
 			[name]: value,
 		}));
 	};
 
-	const handleSaveChanges = async () => {
-		const patchData = [
-			{ path: "/name", op: "replace", value: editDetails.name },
-			{ path: "/email", op: "replace", value: editDetails.email },
-			{ path: "/phoneNumber", op: "replace", value: editDetails.phoneNumber },
-			{ path: "/description", op: "replace", value: editDetails.description },
-		];
-
+	const handleSaveEditedHour = async () => {
+		console.log("Saving edited hour:", editedHour);
 		try {
-			await Api.patch(
-				`${config.apiUrl}salon/${salonId}/manage/update-details`,
-				patchData,
+			const existingHour = openingHours.find(
+				(hour) => hour.dayOfWeek === editedHour.dayOfWeek
+			);
+
+			if (existingHour) {
+				// Jeśli godziny istnieją, wykonaj PUT
+				const response = await Api.put(
+					`${config.apiUrl}salon/${salonId}/manage/opening-hours`,
+					editedHour,
+					{
+						headers: {
+							Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+							"Content-Type": "application/json",
+						},
+					}
+				);
+				console.log("PUT response:", response);
+
+				// Aktualizuj stan openingHours
+				setOpeningHours((prevHours) => {
+					const updatedHours = [...prevHours];
+					const index = updatedHours.findIndex(
+						(hour) => hour.dayOfWeek === editedHour.dayOfWeek
+					);
+
+					updatedHours[index] = { ...editedHour };
+
+					return updatedHours;
+				});
+			} else {
+				// Jeśli godziny nie istnieją, wykonaj POST
+				const response = await Api.post(
+					`${config.apiUrl}salon/${salonId}/manage/opening-hours`,
+					editedHour,
+					{
+						headers: {
+							Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+							"Content-Type": "application/json",
+						},
+					}
+				);
+				console.log("POST response:", response);
+
+				// Dodaj nowe godziny do stanu openingHours
+				setOpeningHours((prevHours) => [...prevHours, editedHour]);
+			}
+
+			setEditedHour({
+				dayOfWeek: null,
+				openingTime: "",
+				closingTime: "",
+			});
+		} catch (error) {
+			if (error.response) {
+				console.error("Error saving opening hours:", error.response.data);
+				setError(`Błąd zapisu godzin: ${error.response.status}`);
+			} else {
+				console.error("No response from server:", error.request);
+				setError("Nie udało się zapisać zmian.");
+			}
+		}
+	};
+
+	const handleDeleteOpeningHour = async (dayOfWeek) => {
+		console.log(`Deleting opening hours for dayOfWeek: ${dayOfWeek}`);
+		try {
+			await Api.delete(
+				`${config.apiUrl}salon/${salonId}/manage/opening-hours/${dayOfWeek}`,
 				{
 					headers: {
 						Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-						"Content-Type": "application/json",
 					},
 				}
 			);
-			// Zaktualizuj szczegóły salonu po pomyślnej edycji
-			setSalon(editDetails);
-			setIsEditing(false);
+			console.log(`Deleted opening hours for dayOfWeek: ${dayOfWeek}`);
+
+			// Usuń godziny z lokalnego stanu
+			setOpeningHours((prevHours) =>
+				prevHours.filter((hour) => hour.dayOfWeek !== dayOfWeek)
+			);
 		} catch (error) {
 			if (error.response) {
-				setError(`Błąd: ${error.response.status}`);
+				console.error("Error deleting opening hours:", error.response.data);
+				setError(`Błąd usuwania godzin: ${error.response.status}`);
 			} else {
-				setError("Nie udało się zapisać zmian.");
+				console.error("No response from server:", error.request);
+				setError("Nie udało się usunąć godzin.");
 			}
 		}
 	};
@@ -101,51 +180,9 @@ const Salon = () => {
 	}
 
 	return (
-		<div className="salon-details-container">
-			<h2>Szczegóły salonu</h2>
-			{isEditing ? (
-				<div className="edit-form">
-					<label>
-						Nazwa:
-						<input
-							type="text"
-							name="name"
-							value={editDetails.name}
-							onChange={handleInputChange}
-						/>
-					</label>
-					<label>
-						Email:
-						<input
-							type="email"
-							name="email"
-							value={editDetails.email}
-							onChange={handleInputChange}
-						/>
-					</label>
-					<label>
-						Telefon:
-						<input
-							type="text"
-							name="phoneNumber"
-							value={editDetails.phoneNumber}
-							onChange={handleInputChange}
-						/>
-					</label>
-					<label>
-						Opis:
-						<textarea
-							name="description"
-							value={editDetails.description}
-							onChange={handleInputChange}
-						/>
-					</label>
-					<div className="buttons">
-						<button onClick={handleSaveChanges}>Zapisz zmiany</button>
-						<button onClick={handleEditToggle}>Anuluj</button>
-					</div>
-				</div>
-			) : (
+		<div>
+			<div className="salon-details-container">
+				<h2>Szczegóły salonu</h2>
 				<div>
 					<p>
 						<strong>Nazwa:</strong> {salon.name}
@@ -159,9 +196,66 @@ const Salon = () => {
 					<p>
 						<strong>Opis:</strong> {salon.description || "Brak danych"}
 					</p>
-					<button onClick={handleEditToggle}>Edytuj</button>
 				</div>
-			)}
+			</div>
+
+			<div className="opening-hours-container">
+				<h2>Godziny otwarcia</h2>
+				{daysOfWeek.map((day, index) => {
+					const hoursForDay = openingHours.find(
+						(hour) => hour.dayOfWeek === index
+					);
+					return (
+						<div key={index} className="day-container">
+							<h3>{day}</h3>
+							{hoursForDay ? (
+								<p>
+									<strong>Godziny:</strong> {hoursForDay.openingTime} -{" "}
+									{hoursForDay.closingTime}
+								</p>
+							) : (
+								<p>Brak ustawionych godzin.</p>
+							)}
+							<div className="buttons">
+								<button onClick={() => handleEditOpeningHour(index)}>
+									Edytuj
+								</button>
+								{hoursForDay && (
+									<button
+										className="delete-button"
+										onClick={() => handleDeleteOpeningHour(index)}
+									>
+										Usuń
+									</button>
+								)}
+							</div>
+							{editedHour.dayOfWeek === index && (
+								<div className="edit-form">
+									<label>
+										Godzina otwarcia:
+										<input
+											type="time"
+											name="openingTime"
+											value={editedHour.openingTime}
+											onChange={handleInputChange}
+										/>
+									</label>
+									<label>
+										Godzina zamknięcia:
+										<input
+											type="time"
+											name="closingTime"
+											value={editedHour.closingTime}
+											onChange={handleInputChange}
+										/>
+									</label>
+									<button onClick={handleSaveEditedHour}>Zapisz</button>
+								</div>
+							)}
+						</div>
+					);
+				})}
+			</div>
 		</div>
 	);
 };

@@ -79,3 +79,86 @@
 	font-size: 1em;
 	margin-bottom: 8px;
 }
+.opening-hours-container {
+	background-color: #1c1c1c;
+	color: #ffffff;
+	padding: 20px;
+	border-radius: 8px;
+	margin: 20px auto;
+	max-width: 600px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.day-container {
+	margin-bottom: 20px;
+	padding: 10px;
+	border: 1px solid #4eb0ed;
+	border-radius: 8px;
+	background-color: #2a2a2a;
+}
+
+.day-container h3 {
+	color: #4eb0ed;
+	margin-bottom: 10px;
+}
+
+.edit-form {
+	margin-top: 10px;
+	display: flex;
+	flex-direction: column;
+}
+
+.edit-form input {
+	margin-bottom: 10px;
+	padding: 8px;
+	border: 1px solid #4eb0ed;
+	border-radius: 4px;
+	background-color: #363e43;
+	color: #ffffff;
+}
+
+.buttons {
+	display: flex;
+	align-items: center;
+	margin-top: 10px;
+}
+
+/* Przyciski wspólne */
+.buttons button {
+	padding: 8px 16px;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	font-size: 14px;
+	font-weight: bold;
+	transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Przyciski "Edytuj" */
+.buttons button:first-child {
+	background-color: #4eb0ed; /* Niebieski */
+	color: #ffffff;
+	margin-right: 10px;
+}
+
+.buttons button:first-child:hover {
+	background-color: #367bb8; /* Ciemniejszy niebieski */
+	transform: scale(1.05); /* Delikatne powiększenie */
+}
+
+/* Przyciski "Usuń" */
+.buttons button.delete-button {
+	background-color: #e74c3c; /* Czerwony */
+	color: #ffffff;
+}
+
+.buttons button.delete-button:hover {
+	background-color: #c0392b; /* Ciemniejszy czerwony */
+	transform: scale(1.05); /* Delikatne powiększenie */
+}
+
+/* Stylizacja aktywnego stanu */
+.buttons button:active {
+	transform: scale(0.95); /* Kliknięcie - lekka zmiana */
+	opacity: 0.9;
+}

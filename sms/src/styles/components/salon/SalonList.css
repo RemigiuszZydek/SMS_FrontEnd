@@ -1,15 +1,15 @@
 .salon-list-container {
-	max-width: 600px;
-	margin: 40px auto;
+	background-color: #1c1c1c;
+	color: #ffffff;
 	padding: 20px;
-	background-color: #1c1c1c; /* Ciemne tło */
-	color: #ffffff; /* Jasny tekst */
 	border-radius: 8px;
-	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+	margin: 20px auto;
+	max-width: 600px;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-h2 {
-	color: #4eb0ed; /* Niebieski */
+.salon-list-container h2 {
+	color: #4eb0ed;
 	text-align: center;
 	margin-bottom: 20px;
 }
@@ -17,33 +17,73 @@ h2 {
 ul {
 	list-style-type: none;
 	padding: 0;
+	margin: 0;
 }
 
-li {
-	background-color: #363e43; /* Ciemnoszare tło dla listy */
-	padding: 10px;
-	margin-bottom: 10px;
+.salon-item {
+	background-color: #363e43;
+	padding: 10px 15px;
 	border-radius: 4px;
-	border: 1px solid #658498; /* Ciemny niebieski */
+	margin-bottom: 10px;
+	transition: background-color 0.3s ease;
+}
+
+.salon-item:hover {
+	background-color: #4a5258;
+}
+
+.salon-name {
+	display: flex; /* Elementy w jednej linii */
+	justify-content: space-between; /* Rozdziela nazwę i przycisk X */
+	align-items: center; /* Wyrównanie w pionie */
+	color: #ffffff;
+	cursor: pointer;
+	font-size: 16px;
+}
+
+.salon-name span {
+	flex-grow: 1; /* Wypełnia przestrzeń między nazwą a przyciskiem */
+}
+
+.delete-button {
+	width: 24px; /* Kwadratowy przycisk */
+	height: 24px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #e74c3c; /* Czerwony kolor */
+	color: #ffffff;
+	border: none;
+	border-radius: 4px; /* Zaokrąglenie kwadratu */
+	cursor: pointer;
+	font-size: 16px;
+	font-weight: bold;
+	transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.delete-button:hover {
+	background-color: #c0392b; /* Ciemniejszy czerwony */
+	transform: scale(1.1); /* Powiększenie na hover */
+}
+
+.delete-button:active {
+	transform: scale(0.95); /* Lekko zmniejszenie na kliknięcie */
+	opacity: 0.9; /* Zmniejszona przezroczystość */
 }
 
 button {
-	background-color: #4eb0ed; /* Niebieski przycisk */
+	background-color: #4eb0ed;
 	color: #ffffff;
 	padding: 10px 15px;
 	border: none;
 	border-radius: 4px;
 	cursor: pointer;
 	font-size: 16px;
-	margin-top: 20px;
+	width: 100%;
+	margin-top: 15px;
+	transition: background-color 0.3s ease;
 }
 
 button:hover {
-	background-color: #ad8f65; /* Złoty */
-}
-
-p {
-	text-align: center;
-	color: #ad8f65; /* Złoty tekst dla komunikatu */
-	margin-top: 20px;
+	background-color: #367bb8; /* Ciemniejszy niebieski */
 }
