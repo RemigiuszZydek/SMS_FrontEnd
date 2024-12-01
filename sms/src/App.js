@@ -19,7 +19,7 @@ function App() {
 				<Route path="/settings" element={<Settings />} />
 				<Route path="/salon" element={<SalonList />} />
 				<Route path="/salon/create" element={<CreateSalon />} />
-				<Route path="/employe" element={<Employee />} />
+				<Route path="/employee" element={<Employee />} />
 				<Route path="/services" element={<Services />} />
 				<Route path="/services" element={<Products />} />
 				<Route path="/salon/:salonId" element={<Salon />} />
