@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { signIn, sendResetPasswordToken } from "../../api/authService";
 import "../../styles/components/auth/Login.css";
+import decodeAccessToken from "../../api/decodeAccessToken";
 
 const Login = () => {
 	const [formData, setFormData] = useState({ email: "", password: "" });
@@ -40,12 +41,16 @@ const Login = () => {
 		setValidationErrors([]);
 		try {
 			const response = await signIn(formData);
+
 			localStorage.setItem("accessToken", response.data.accessToken);
 			localStorage.setItem("refreshToken", response.data.refreshToken);
 			localStorage.setItem(
 				"accessTokenExpiration",
 				response.data.accessTokenExpiration
 			);
+			const roles = decodeAccessToken(localStorage.getItem("accessToken"));
+			localStorage.setItem("roles", roles);
+			console.log(roles);
 			navigate("/dashboard");
 		} catch (err) {
 			console.error("Błąd logowania:", err);
