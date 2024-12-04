@@ -24,6 +24,13 @@ const Salon = () => {
 		openingTime: "",
 		closingTime: "",
 	});
+	const [isEditingSalon, setIsEditingSalon] = useState(false);
+	const [editedSalonDetails, setEditedSalonDetails] = useState({
+		name: "",
+		email: "",
+		phoneNumber: "",
+		description: "",
+	});
 
 	useEffect(() => {
 		const fetchSalonDetails = async () => {
@@ -50,8 +57,21 @@ const Salon = () => {
 				}
 			}
 		};
+
 		fetchSalonDetails();
 	}, [salonId]);
+
+	useEffect(() => {
+		// Ustaw dane edycji tylko raz, kiedy `salon` zostanie załadowany
+		if (salon) {
+			setEditedSalonDetails({
+				name: salon.name || "",
+				email: salon.email || "",
+				phoneNumber: salon.phoneNumber || "",
+				description: salon.description || "",
+			});
+		}
+	}, [salon]);
 
 	const handleEditOpeningHour = (dayOfWeek) => {
 		const hour = openingHours.find((h) => h.dayOfWeek === dayOfWeek);
@@ -166,6 +186,57 @@ const Salon = () => {
 		}
 	};
 
+	const handleSalonInputChange = (e) => {
+		const { name, value } = e.target;
+		setEditedSalonDetails((prev) => ({
+			...prev,
+			[name]: value,
+		}));
+	};
+
+	const handleSaveSalonDetails = async () => {
+		try {
+			console.log("Saving salon details:", editedSalonDetails);
+			const response = await Api.patch(
+				`${config.apiUrl}salon/${salonId}/manage/update-details`,
+				[
+					{ path: "/name", op: "replace", value: editedSalonDetails.name },
+					{ path: "/email", op: "replace", value: editedSalonDetails.email },
+					{
+						path: "/phoneNumber",
+						op: "replace",
+						value: editedSalonDetails.phoneNumber,
+					},
+					{
+						path: "/description",
+						op: "replace",
+						value: editedSalonDetails.description,
+					},
+				],
+				{
+					headers: {
+						Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+						"Content-Type": "application/json",
+					},
+				}
+			);
+			console.log("Salon details updated:", response.data);
+			setSalon((prev) => ({
+				...prev,
+				...editedSalonDetails,
+			}));
+			setIsEditingSalon(false); // Zamknij tryb edycji po zapisaniu
+		} catch (error) {
+			if (error.response) {
+				console.error("Error updating salon details:", error.response.data);
+				setError(`Błąd zapisu danych salonu: ${error.response.status}`);
+			} else {
+				console.error("No response from server:", error.request);
+				setError("Nie udało się zapisać danych salonu.");
+			}
+		}
+	};
+
 	if (error) {
 		return (
 			<div className="error-container">
@@ -183,20 +254,67 @@ const Salon = () => {
 		<div>
 			<div className="salon-details-container">
 				<h2>Szczegóły salonu</h2>
-				<div>
-					<p>
-						<strong>Nazwa:</strong> {salon.name}
-					</p>
-					<p>
-						<strong>Email:</strong> {salon.email}
-					</p>
-					<p>
-						<strong>Telefon:</strong> {salon.phoneNumber || "Brak danych"}
-					</p>
-					<p>
-						<strong>Opis:</strong> {salon.description || "Brak danych"}
-					</p>
-				</div>
+				{isEditingSalon ? (
+					<div className="edit-form">
+						<label>
+							Nazwa:
+							<input
+								type="text"
+								name="name"
+								value={editedSalonDetails.name}
+								onChange={handleSalonInputChange}
+							/>
+						</label>
+						<label>
+							Email:
+							<input
+								type="email"
+								name="email"
+								value={editedSalonDetails.email}
+								onChange={handleSalonInputChange}
+							/>
+						</label>
+						<label>
+							Numer telefonu:
+							<input
+								type="text"
+								name="phoneNumber"
+								value={editedSalonDetails.phoneNumber}
+								onChange={handleSalonInputChange}
+							/>
+						</label>
+						<label>
+							Opis:
+							<textarea
+								name="description"
+								value={editedSalonDetails.description}
+								onChange={handleSalonInputChange}
+							/>
+						</label>
+						<div className="buttons">
+							<button onClick={handleSaveSalonDetails}>Zapisz</button>
+							<button onClick={() => setIsEditingSalon(false)}>Anuluj</button>
+						</div>
+					</div>
+				) : (
+					<div>
+						<p>
+							<strong>Nazwa:</strong> {salon.name}
+						</p>
+						<p>
+							<strong>Email:</strong> {salon.email}
+						</p>
+						<p>
+							<strong>Telefon:</strong> {salon.phoneNumber || "Brak danych"}
+						</p>
+						<p>
+							<strong>Opis:</strong> {salon.description || "Brak danych"}
+						</p>
+						<button onClick={() => setIsEditingSalon(true)}>
+							Edytuj dane salonu
+						</button>
+					</div>
+				)}
 			</div>
 
 			<div className="opening-hours-container">
