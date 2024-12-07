@@ -3,3 +3,44 @@ body {
 	color: #e1e1e1; /* Jasny tekst dla lepszej czytelności */
 	font-family: Arial, sans-serif;
 }
+/* Ogólny układ aplikacji */
+.app-container {
+	display: flex;
+	min-height: 100vh;
+}
+
+.app-container.with-sidebar .content-container {
+	margin-left: 220px; /* Szerokość Sidebar */
+	width: calc(100% - 220px);
+}
+
+/* Układ bez Sidebara */
+.app-container.no-sidebar .content-container {
+	margin-left: 0;
+	width: 100%;
+}
+
+/* Styl kontenera treści */
+.content-container {
+	padding: 20px;
+	box-sizing: border-box;
+	background-color: #121212;
+	color: #ffffff;
+	transition: margin-left 0.3s ease-in-out;
+}
+
+/* Responsywność */
+@media (max-width: 768px) {
+	.app-container.with-sidebar .content-container {
+		margin-left: 180px;
+		width: calc(100% - 180px);
+	}
+}
+
+@media (max-width: 576px) {
+	.app-container.with-sidebar .content-container,
+	.app-container.no-sidebar .content-container {
+		margin-left: 0;
+		width: 100%;
+	}
+}

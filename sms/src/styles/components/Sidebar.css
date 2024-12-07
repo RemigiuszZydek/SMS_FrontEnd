@@ -1,0 +1,121 @@
+/* Główne stylowanie Sidebar */
+.sidebar {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 45px; /* Początkowa szerokość zminimalizowanego sidebaru */
+	height: 100vh;
+	background-color: #1c1c1c; /* Ciemne tło */
+	color: #ffffff;
+	padding: 10px 0;
+	box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+	overflow-y: auto;
+	transition: width 0.3s ease; /* Animacja rozszerzania */
+	z-index: 1000;
+}
+
+.sidebar:hover {
+	width: 160px; /* Pełna szerokość przy najechaniu */
+}
+
+/* Tytuł Sidebar */
+.sidebar-title {
+	text-align: center;
+	font-size: 1.5rem;
+	color: #4eb0ed;
+	margin-bottom: 20px;
+	transition: opacity 0.3s ease; /* Płynne pojawianie się */
+	opacity: 0; /* Ukrycie tekstu w zminimalizowanym widoku */
+}
+
+.sidebar:hover .sidebar-title {
+	opacity: 1; /* Pokaż tytuł po rozszerzeniu */
+}
+
+/* Lista linków w Sidebar */
+.sidebar-links {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
+
+/* Stylowanie każdego linka */
+.sidebar-link {
+	display: flex;
+	align-items: center;
+	text-decoration: none;
+	color: #ffffff;
+	font-size: 1rem;
+	padding: 10px;
+	border-radius: 4px;
+	width: 100%;
+	transition: background-color 0.3s ease, color 0.3s ease,
+		padding-left 0.3s ease;
+	overflow-wrap: break-word; /* Pozwala łamać tekst w długich nazwach */
+	white-space: normal; /* Zezwala na zawijanie linii */
+}
+
+/* Ikony w Sidebar */
+.sidebar-link .icon {
+	font-size: 1.2rem;
+	margin-right: 10px;
+	min-width: 24px; /* Zapewnia spójność ikon */
+	color: #ffffff;
+}
+
+/* Tekst linka w Sidebar */
+.sidebar-link .text {
+	display: inline-block;
+	opacity: 0; /* Ukrycie tekstu w zminimalizowanym widoku */
+	transition: opacity 0.3s ease, transform 0.3s ease;
+	transform: translateX(
+		-10px
+	); /* Efekt przesunięcia w zminimalizowanym widoku */
+}
+
+.sidebar:hover .text {
+	opacity: 1; /* Pokaż tekst po rozszerzeniu */
+	transform: translateX(0); /* Cofnij przesunięcie */
+	white-space: normal; /* Pozwala tekstowi zawijać się na nową linię */
+	word-break: break-word; /* Łamie tekst w dowolnym miejscu */
+	overflow-wrap: break-word; /* Dodatkowe łamanie na spacji lub między znakami */
+	text-align: left; /* Wyrównanie tekstu do lewej */
+}
+
+/* Stylowanie aktywnego linka */
+.sidebar-link.active {
+	background-color: #4eb0ed;
+	color: #ffffff;
+	font-weight: bold;
+}
+
+/* Efekt najechania na link */
+.sidebar-link:hover {
+	background-color: #4eb0ed;
+	color: #ffffff;
+	padding-left: 15px; /* Delikatne przesunięcie przy najechaniu */
+}
+
+/* Responsywność */
+@media (max-width: 768px) {
+	.sidebar {
+		width: 70px; /* Mniejsza szerokość na mniejszych ekranach */
+	}
+
+	.sidebar:hover {
+		width: 200px; /* Rozszerzenie na mniejszych ekranach */
+	}
+}
+
+@media (max-width: 576px) {
+	.sidebar {
+		width: 60px; /* Jeszcze mniejsza szerokość */
+	}
+
+	.sidebar:hover {
+		width: 180px; /* Rozszerzenie na bardzo małych ekranach */
+	}
+}
