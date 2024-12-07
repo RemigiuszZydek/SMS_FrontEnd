@@ -6,6 +6,7 @@ import Settings from "./components/Settings";
 import Salon from "./components/salon/Salon";
 import CreateSalon from "./components/salon/CreateSalon";
 import Employee from "./components/employee/Employees";
+import EmployeeDetails from "./components/employee/EmployeeDetails";
 import Services from "./components/services/Services";
 import Products from "./components/products/Products";
 import SalonList from "./components/salon/SalonList";
@@ -20,6 +21,7 @@ function App() {
 				<Route path="/salon" element={<SalonList />} />
 				<Route path="/salon/create" element={<CreateSalon />} />
 				<Route path="/employee" element={<Employee />} />
+				<Route path="/employee/:id" element={<EmployeeDetails />} />
 				<Route path="/services" element={<Services />} />
 				<Route path="/services" element={<Products />} />
 				<Route path="/salon/:salonId" element={<Salon />} />
