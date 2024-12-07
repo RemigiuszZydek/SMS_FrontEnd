@@ -13,6 +13,7 @@ const EditEmployeeModal = ({ employee, onClose, onSave }) => {
 		color: employee.employee.color,
 		hireDate: employee.employee.hireDate,
 		dateOfBirth: employee.employeeProfile.dateOfBirth,
+		notes: employee.employee.notes || "",
 	});
 	const [error, setError] = useState("");
 
@@ -33,33 +34,53 @@ const EditEmployeeModal = ({ employee, onClose, onSave }) => {
 
 	const handleSaveChanges = async () => {
 		try {
-			await Api.put(
-				`${config.apiUrl}employee/${employee.employee.id}`,
-				{
-					employeeProfile: {
-						firstName: formData.firstName,
-						lastName: formData.lastName,
-						email: formData.email,
-						phoneNumber: formData.phoneNumber,
-						dateOfBirth: formData.dateOfBirth,
-					},
-					employee: {
-						position: formData.position,
-						color: formData.color,
-						hireDate: formData.hireDate,
-					},
-				},
-				{
-					headers: {
-						Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-						"Content-Type": "application/json",
-					},
-				}
-			);
-			onClose();
-			onSave();
+			// Request for employee updates
+			const employeePatchData = [
+				{ path: "/position", op: "replace", value: formData.position },
+				{ path: "/color", op: "replace", value: formData.color },
+				{ path: "/hireDate", op: "replace", value: formData.hireDate },
+				{ path: "/notes", op: "replace", value: formData.notes },
+			];
+
+			// Request for employee details updates
+			const detailsPatchData = [
+				{ path: "/firstName", op: "replace", value: formData.firstName },
+				{ path: "/lastName", op: "replace", value: formData.lastName },
+				{ path: "/dateOfBirth", op: "replace", value: formData.dateOfBirth },
+				{ path: "/email", op: "replace", value: formData.email },
+				{ path: "/phoneNumber", op: "replace", value: formData.phoneNumber },
+			];
+
+			console.log("Employee Patch Data:", employeePatchData);
+			console.log("Details Patch Data:", detailsPatchData);
+
+			await Promise.all([
+				Api.patch(
+					`${config.apiUrl}employee/update/${employee.employee.id}`,
+					employeePatchData,
+					{
+						headers: {
+							Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+							"Content-Type": "application/json",
+						},
+					}
+				),
+				Api.patch(
+					`${config.apiUrl}employee/details/update/${employee.employee.id}`,
+					detailsPatchData,
+					{
+						headers: {
+							Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+							"Content-Type": "application/json",
+						},
+					}
+				),
+			]);
+
+			onSave(); // Refresh parent data
+			onClose(); // Close modal
 		} catch (error) {
-			console.error(error);
+			console.error("Error while updating employee:", error);
 			setError("Nie udało się zapisać zmian.");
 		}
 	};
@@ -156,6 +177,14 @@ const EditEmployeeModal = ({ employee, onClose, onSave }) => {
 						type="date"
 						name="dateOfBirth"
 						value={formData.dateOfBirth}
+						onChange={handleInputChange}
+					/>
+				</label>
+				<label>
+					Notatki:
+					<textarea
+						name="notes"
+						value={formData.notes}
 						onChange={handleInputChange}
 					/>
 				</label>

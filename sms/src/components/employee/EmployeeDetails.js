@@ -11,6 +11,20 @@ const EmployeeDetails = () => {
 	const [error, setError] = useState("");
 	const [isEditing, setIsEditing] = useState(false);
 
+	// Tłumacz kolorów
+	const translateColor = (hex) => {
+		const colors = [
+			{ name: "Blue", value: "#0000FF" },
+			{ name: "Red", value: "#FF0000" },
+			{ name: "Green", value: "#00FF00" },
+		];
+
+		const color = colors.find(
+			(color) => color.value.toUpperCase() === hex.toUpperCase()
+		);
+		return color ? color.name : "Unknown Color";
+	};
+
 	// Pobranie szczegółów pracownika
 	const fetchEmployeeDetails = async () => {
 		try {
@@ -68,7 +82,7 @@ const EmployeeDetails = () => {
 					<strong>Stanowisko:</strong> {employee.employee.position}
 				</p>
 				<p>
-					<strong>Kolor:</strong> {employee.employee.color}
+					<strong>Kolor:</strong> {translateColor(employee.employee.color)}
 				</p>
 				<p>
 					<strong>Data zatrudnienia:</strong> {employee.employee.hireDate}
