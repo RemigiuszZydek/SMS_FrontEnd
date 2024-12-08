@@ -1,0 +1,86 @@
+.services-container {
+	background-color: #2a2a2a;
+	color: #ffffff;
+	padding: 20px;
+	border-radius: 8px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	max-width: 800px;
+	margin: 20px auto;
+	font-family: Arial, sans-serif;
+}
+
+.services-container h2 {
+	color: #4eb0ed;
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+.services-container label {
+	display: block;
+	margin-bottom: 20px;
+	font-size: 1.1rem;
+}
+
+.services-container select {
+	width: 100%;
+	padding: 10px;
+	font-size: 1rem;
+	background-color: #1c1c1c;
+	color: #ffffff;
+	border: 1px solid #4eb0ed;
+	border-radius: 4px;
+}
+
+.services-list {
+	list-style: none;
+	padding: 0;
+}
+
+.service-item {
+	position: relative; /* Ustawienie kontekstu dla pozycji absolutnej przycisku */
+	background-color: #2a2a2a;
+	padding: 20px 15px;
+	border-radius: 4px;
+	margin-bottom: 10px;
+	transition: transform 0.2s ease, background-color 0.2s ease;
+	cursor: pointer; /* Cały element jest klikalny */
+}
+
+.service-item:hover {
+	background-color: #4eb0ed;
+	transform: translateY(-2px);
+	color: #ffffff;
+}
+
+.service-item h3 {
+	margin-top: 0;
+	margin-bottom: 10px;
+	pointer-events: none; /* Umożliwia kliknięcie całego elementu bez przeszkód */
+}
+
+.delete-button {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	background: none;
+	border: none;
+	color: #e74c3c;
+	font-size: 1.5rem;
+	cursor: pointer;
+	line-height: 1;
+	transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.delete-button:hover {
+	color: #ff6f61;
+	transform: scale(1.2); /* Delikatne powiększenie przy najechaniu */
+}
+
+.delete-button:focus {
+	outline: none; /* Usunięcie domyślnego obramowania */
+}
+
+/* Wyjątek dla przycisku delete-button, aby jego kliknięcie nie aktywowało całego elementu */
+.service-item .delete-button {
+	pointer-events: auto;
+}

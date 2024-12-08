@@ -1,0 +1,131 @@
+.modal {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.6); /* Nieco ciemniejsze tło */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	overflow-y: auto; /* Przewijanie w razie potrzeby */
+	padding: 20px; /* Odstęp od krawędzi */
+	box-sizing: border-box;
+	z-index: 1000; /* Nad innymi elementami */
+}
+
+.modal-content {
+	background-color: #1e1e1e; /* Bardziej ciemny odcień */
+	color: #e1e1e1; /* Jaśniejszy tekst */
+	padding: 25px;
+	border-radius: 10px;
+	width: 100%;
+	max-width: 450px; /* Zwiększona maksymalna szerokość */
+	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4); /* Większy cień */
+	box-sizing: border-box;
+	animation: fadeIn 0.3s ease; /* Animacja wejścia */
+}
+
+.modal-content h3 {
+	color: #4eb0ed; /* Akcent kolorystyczny */
+	margin-bottom: 20px;
+	font-size: 1.8rem; /* Większy nagłówek */
+	text-align: center;
+	border-bottom: 2px solid #4eb0ed; /* Dodatkowy podkreślony nagłówek */
+	padding-bottom: 10px;
+}
+
+.modal-content input,
+.modal-content select,
+.modal-content textarea {
+	width: 100%;
+	background-color: #2b2b2b; /* Ciemniejsze pola wejściowe */
+	color: #ffffff;
+	border: 1px solid #4eb0ed;
+	padding: 12px; /* Większy odstęp */
+	border-radius: 6px;
+	margin-bottom: 20px; /* Większy odstęp między polami */
+	font-size: 1rem;
+	box-sizing: border-box; /* Uwzględnia padding w szerokości */
+	transition: border-color 0.3s ease;
+}
+
+.modal-content input:focus,
+.modal-content select:focus,
+.modal-content textarea:focus {
+	outline: none;
+	border-color: #367bb8; /* Zmiana koloru obramowania w trakcie fokusu */
+	box-shadow: 0 0 6px rgba(78, 176, 237, 0.5); /* Efekt podświetlenia */
+}
+
+.modal-content textarea {
+	resize: vertical; /* Możliwość zmiany rozmiaru tylko w pionie */
+	min-height: 80px; /* Minimalna wysokość dla większych treści */
+}
+
+.buttons {
+	display: flex;
+	flex-wrap: wrap; /* Zwijanie na mniejszych ekranach */
+	gap: 15px; /* Większe odstępy między przyciskami */
+	justify-content: space-between; /* Równomierne rozmieszczenie */
+}
+
+.buttons button {
+	flex: 1 1 calc(50% - 15px); /* Rozmiar dostosowany do większych ekranów */
+	max-width: 200px;
+	background-color: #4eb0ed; /* Standardowy kolor przycisku */
+	color: #ffffff;
+	border: none;
+	padding: 12px; /* Większy przycisk */
+	border-radius: 6px; /* Bardziej zaokrąglone rogi */
+	cursor: pointer;
+	font-size: 1rem; /* Większy tekst */
+	font-weight: bold; /* Podkreślenie ważności */
+	transition: background-color 0.3s ease, transform 0.2s ease;
+	text-align: center;
+}
+
+.buttons button:hover {
+	background-color: #367bb8; /* Ciemniejszy odcień na hover */
+	transform: translateY(-2px); /* Subtelne uniesienie przycisku */
+}
+
+.buttons button:active {
+	transform: translateY(0); /* Efekt "wciśnięcia" przycisku */
+}
+
+@media (max-width: 768px) {
+	.modal-content {
+		width: 100%;
+		max-width: 95%;
+		padding: 20px; /* Mniejsze padding na mniejszych ekranach */
+	}
+	.buttons button {
+		font-size: 0.9rem; /* Zmniejszenie tekstu na małych ekranach */
+		padding: 10px;
+	}
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+		transform: scale(0.9); /* Subtelne powiększenie */
+	}
+	to {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+.error {
+	color: #e74c3c;
+	font-size: 14px;
+	margin-bottom: 15px;
+}
+
+.detailed-errors {
+	color: #e74c3c;
+	font-size: 12px;
+	margin-top: 10px;
+	padding-left: 20px;
+	list-style-type: disc;
+}

@@ -1,0 +1,46 @@
+.service-list {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
+
+.service-item {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 8px 12px;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	margin-bottom: 8px;
+}
+
+.service-item:hover {
+	background-color: #f9f9f9;
+}
+
+.remove-button {
+	background-color: #ff4d4d;
+	color: white;
+	border: none;
+	border-radius: 50%; /* Zmienione na okrągły przycisk */
+	width: 30px; /* Stały rozmiar dla przycisku */
+	height: 30px; /* Stały rozmiar dla przycisku */
+	font-size: 1rem;
+	cursor: pointer;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	transition: background-color 0.3s;
+}
+
+.remove-button:hover {
+	background-color: #e63939;
+}
+
+@media (max-width: 600px) {
+	.remove-button {
+		width: 25px; /* Zmniejszony rozmiar przy mniejszych ekranach */
+		height: 25px;
+		font-size: 0.9rem;
+	}
+}

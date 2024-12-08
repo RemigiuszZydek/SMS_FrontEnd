@@ -1,17 +1,22 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import Api from "../../api/Api";
 import config from "../../config";
 import EditEmployeeModal from "./EditEmployeeModal";
+import AssignServiceModal from "./AssignServiceModal";
+import ViewServicesModal from "./ViewServicesModal"; // Import nowego modalu
 import "../../styles/components/employee/EmployeeDetails.css";
 
 const EmployeeDetails = () => {
 	const { id } = useParams();
 	const [employee, setEmployee] = useState(null);
+	const location = useLocation();
+	const salonId = location.state?.salonId || "";
 	const [error, setError] = useState("");
 	const [isEditing, setIsEditing] = useState(false);
+	const [isAssigning, setIsAssigning] = useState(false);
+	const [isViewingServices, setIsViewingServices] = useState(false); // Nowy stan dla modalu
 
-	// Tłumacz kolorów
 	const translateColor = (hex) => {
 		const colors = [
 			{ name: "Blue", value: "#0000FF" },
@@ -25,7 +30,18 @@ const EmployeeDetails = () => {
 		return color ? color.name : "Unknown Color";
 	};
 
-	// Pobranie szczegółów pracownika
+	const translateStatus = (statusNumber) => {
+		const statuses = [
+			{ value: 0, name: "Aktywny" },
+			{ value: 1, name: "Nie aktywny" },
+			{ value: 2, name: "Urlop" },
+			{ value: 3, name: "Zwolniony" },
+		];
+
+		const status = statuses.find((status) => status.value === statusNumber);
+		return status ? status.name : "Unknown Status";
+	};
+
 	const fetchEmployeeDetails = async () => {
 		try {
 			const response = await Api.get(`${config.apiUrl}employee/${id}`, {
@@ -39,7 +55,6 @@ const EmployeeDetails = () => {
 		}
 	};
 
-	// Obsługa błędów
 	const handleError = (error, defaultMessage) => {
 		if (error.response) {
 			setError(error.response.data.message || defaultMessage);
@@ -91,16 +106,38 @@ const EmployeeDetails = () => {
 					<strong>Data urodzenia:</strong>{" "}
 					{employee.employeeProfile.dateOfBirth}
 				</p>
+				<p>
+					<strong>Status:</strong>{" "}
+					{translateStatus(employee.employee.employmentStatus)}
+				</p>
 			</div>
 			<div className="buttons">
 				<button onClick={() => setIsEditing(true)}>Edytuj</button>
+				<button onClick={() => setIsAssigning(true)}>Przypisz usługę</button>
+				<button onClick={() => setIsViewingServices(true)}>
+					Wyświetl usługi
+				</button>{" "}
+				{/* Nowy przycisk */}
 				<button onClick={() => window.history.back()}>Wróć</button>
 			</div>
 			{isEditing && (
 				<EditEmployeeModal
 					employee={employee}
 					onClose={() => setIsEditing(false)}
-					onSave={fetchEmployeeDetails} // Odśwież dane po zapisaniu
+					onSave={fetchEmployeeDetails}
+				/>
+			)}
+			{isAssigning && (
+				<AssignServiceModal
+					employeeId={employee.employee.id}
+					salonId={salonId}
+					onClose={() => setIsAssigning(false)}
+				/>
+			)}
+			{isViewingServices && (
+				<ViewServicesModal
+					employeeId={employee.employee.id} // Przekazanie ID pracownika
+					onClose={() => setIsViewingServices(false)}
 				/>
 			)}
 		</div>

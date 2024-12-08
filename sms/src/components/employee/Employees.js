@@ -86,7 +86,9 @@ const Employees = () => {
 
 	// Handle employee click
 	const handleEmployeeClick = (employeeId) => {
-		navigate(`/employee/${employeeId}`); // Przekierowanie do strony pracownika
+		navigate(`/employee/${employeeId}`, {
+			state: { salonId: selectedSalonId },
+		}); // Przekierowanie do strony pracownika
 	};
 
 	return (
