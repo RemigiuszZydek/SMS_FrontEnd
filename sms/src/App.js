@@ -16,6 +16,7 @@ import EmployeeDetails from "./components/employee/EmployeeDetails";
 import Services from "./components/services/Services";
 import Products from "./components/products/Products";
 import Salon from "./components/salon/Salon";
+import EmployeeScheduleCalendar from "./components/calendar/EmployeeScheduleCalendar";
 
 const App = () => {
 	const location = useLocation();
@@ -51,6 +52,7 @@ const App = () => {
 					<Route path="/services" element={<Services />} />
 					<Route path="/products" element={<Products />} />
 					<Route path="/salon/:salonId" element={<Salon />} />
+					<Route path="/calendar" element={<EmployeeScheduleCalendar />} />
 				</Routes>
 			</div>
 		</div>

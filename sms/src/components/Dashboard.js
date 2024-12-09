@@ -29,6 +29,10 @@ const Dashboard = () => {
 					<h2>Produkty</h2>
 					<p>Zarządzaj produktami</p>
 				</div>
+				<div className="window" onClick={() => navigate("/calendar")}>
+					<h2>Kalendarz</h2>
+					<p>Zarządzaj terminami</p>
+				</div>
 			</div>
 		</div>
 	);
