@@ -1,0 +1,235 @@
+/* Kontener kalendarza */
+.calendar-container {
+	background-color: #1c1c1c;
+	color: #ffffff;
+	padding: 20px;
+	border-radius: 8px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	max-width: 100%;
+	margin: auto;
+	margin-left: 45px;
+	font-family: Arial, sans-serif;
+	overflow: hidden;
+}
+
+.calendar-container h2 {
+	color: #4eb0ed;
+	text-align: center;
+	margin-bottom: 20px;
+	font-size: 1.8rem;
+}
+
+/* Salon select */
+.salon-select-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 20px;
+}
+
+.salon-select-container label {
+	margin-right: 10px;
+	font-size: 1.1rem;
+	color: #ffffff;
+}
+
+.salon-select-container select {
+	padding: 8px;
+	font-size: 1rem;
+	border-radius: 4px;
+	border: 1px solid #4eb0ed;
+	background-color: #1c1c1c;
+	color: #ffffff;
+	max-width: 300px;
+	width: 100%;
+	transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.salon-select-container select:focus {
+	outline: none;
+	border-color: #3a90c3;
+	box-shadow: 0 0 6px #3a90c3;
+}
+
+/* Kalendarz */
+.calendar-wrapper {
+	overflow-x: hidden;
+}
+
+.rbc-calendar {
+	background-color: #2a2a2a;
+	border-radius: 8px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	padding: 15px;
+}
+
+/* Toolbar */
+.rbc-toolbar {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	margin-bottom: 10px;
+	padding: 5px;
+}
+
+.rbc-toolbar button {
+	background-color: #4eb0ed;
+	border: none;
+	border-radius: 4px;
+	padding: 8px 12px;
+	font-size: 0.9rem;
+	cursor: pointer;
+	transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.rbc-toolbar button:hover {
+	background-color: #3a90c3;
+	transform: scale(1.05);
+}
+
+.rbc-toolbar-label {
+	color: #ffffff;
+	font-size: 1.2rem;
+	font-weight: bold;
+	text-align: center;
+}
+
+/* Nagłówki dni */
+.rbc-header {
+	background-color: #1c1c1c;
+	color: #ffffff;
+	padding: 10px;
+	font-weight: bold;
+	font-size: 1rem;
+	text-align: center;
+}
+
+/* Komórki */
+.rbc-date-cell {
+	color: #ffffff;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+
+.rbc-date-cell:hover {
+	background-color: #4eb0ed;
+	color: #ffffff;
+	border-radius: 50%;
+}
+
+.rbc-event {
+	background-color: #4eb0ed;
+	color: #ffffff;
+	border-radius: 4px;
+	padding: 2px;
+	text-align: center;
+	cursor: pointer;
+	font-size: 0.9rem;
+}
+
+.rbc-event:hover {
+	background-color: #3a90c3;
+}
+
+.rbc-day-bg:hover {
+	background-color: #4eb0ed;
+}
+
+/* Responsywność */
+@media (max-width: 768px) {
+	.rbc-toolbar {
+		flex-wrap: wrap;
+	}
+
+	.rbc-toolbar button {
+		margin-bottom: 10px;
+		width: 100%;
+	}
+}
+.task-modal {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background-color: #1c1c1c;
+	color: #ffffff;
+	padding: 0; /* Usunięcie paddingu z głównego kontenera */
+	border-radius: 8px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	width: 400px;
+	z-index: 1000;
+	display: flex; /* Dodanie flexboxa */
+	flex-direction: column; /* Ustawienie elementów w kolumnie */
+}
+
+.modal-content {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	box-sizing: border-box;
+}
+
+.modal-content label {
+	margin-bottom: 10px;
+	font-size: 1rem;
+	color: #ffffff;
+}
+
+.modal-content input {
+	padding: 8px;
+	font-size: 1rem;
+	border-radius: 4px;
+	border: 1px solid #4eb0ed;
+	background-color: #2a2a2a;
+	color: #ffffff;
+	width: 100%;
+}
+
+.modal-content input:focus {
+	outline: none;
+	box-shadow: 0 0 6px #4eb0ed;
+}
+
+.modal-buttons {
+	display: flex;
+	justify-content: space-between;
+	padding: 10px 20px; /* Dodanie paddingu do przycisków */
+	background-color: #1c1c1c; /* Dopasowanie koloru tła */
+	border-top: 1px solid #4eb0ed; /* Dodanie linii oddzielającej */
+}
+
+.modal-buttons button {
+	padding: 10px 15px;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+
+.modal-buttons button:first-child {
+	background-color: #4eb0ed;
+	color: #ffffff;
+}
+
+.modal-buttons button:first-child:hover {
+	background-color: #3a90c3;
+}
+
+.modal-buttons button:last-child {
+	background-color: #e74c3c;
+	color: #ffffff;
+}
+
+.modal-buttons button:last-child:hover {
+	background-color: #c0392b;
+}
+select {
+	display: block;
+	width: 100%;
+	padding: 8px;
+	font-size: 1rem;
+	border: 1px solid #4eb0ed;
+	border-radius: 4px;
+	background-color: #1c1c1c;
+	color: #ffffff;
+}

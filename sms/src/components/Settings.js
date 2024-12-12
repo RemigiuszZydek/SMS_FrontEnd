@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import config from '../config';
+import config from "../config";
 import Api from "../api/Api";
 import "../styles/components/Settings.css";
 
@@ -14,14 +14,14 @@ const Settings = () => {
 	const [emailError, setEmailError] = useState("");
 	const navigate = useNavigate();
 
-	const handlePasswordChange = async (e) => { //przenieś do auth
+	const handlePasswordChange = async (e) => {
+		//przenieś do auth
 		e.preventDefault();
 		try {
-			
 			const response = await Api.post(`${config.apiUrl}auth/change-password`, {
 				currentPassword,
 				newPassword,
-			  });
+			});
 
 			if (response.status === 200) {
 				setPasswordMessage("Hasło zostało zmienione pomyślnie.");
@@ -34,20 +34,27 @@ const Settings = () => {
 		}
 	};
 
-	const handleEmailChange = async (e) => { //przenieś do auth
+	const handleEmailChange = async (e) => {
+		//przenieś do auth
 		e.preventDefault();
 		try {
-			const response = await Api.post(`${config.apiUrl}auth/send-confirmation-change-email`,
-			{
-				newEmail
-			});
+			const response = await Api.post(
+				`${config.apiUrl}auth/send-confirmation-change-email`,
+				{
+					newEmail,
+				}
+			);
 
 			if (response.status === 200) {
-				setEmailMessage("Link do potwierdzenia zmiany adresu e-mail został wysłany.");
+				setEmailMessage(
+					"Link do potwierdzenia zmiany adresu e-mail został wysłany."
+				);
 				setEmailError("");
 			}
 		} catch (error) {
-			setEmailError("Błąd przy wysyłaniu linku zmiany e-maila. Spróbuj ponownie.");
+			setEmailError(
+				"Błąd przy wysyłaniu linku zmiany e-maila. Spróbuj ponownie."
+			);
 			setEmailMessage("");
 			console.error("Błąd:", error);
 		}

@@ -27,6 +27,7 @@ const App = () => {
 		"/employee",
 		"/services",
 		"/products",
+		"/calendar",
 	];
 
 	const showSidebar = sidebarRoutes.some((route) =>
