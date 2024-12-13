@@ -17,6 +17,7 @@ import Services from "./components/services/Services";
 import Products from "./components/products/Products";
 import Salon from "./components/salon/Salon";
 import EmployeeScheduleCalendar from "./components/calendar/EmployeeScheduleCalendar";
+import Customers from "./components/customer/Customers";
 
 const App = () => {
 	const location = useLocation();
@@ -28,6 +29,7 @@ const App = () => {
 		"/services",
 		"/products",
 		"/calendar",
+		"/customers",
 	];
 
 	const showSidebar = sidebarRoutes.some((route) =>
@@ -54,6 +56,7 @@ const App = () => {
 					<Route path="/products" element={<Products />} />
 					<Route path="/salon/:salonId" element={<Salon />} />
 					<Route path="/calendar" element={<EmployeeScheduleCalendar />} />
+					<Route path="/customers" element={<Customers />} />
 				</Routes>
 			</div>
 		</div>

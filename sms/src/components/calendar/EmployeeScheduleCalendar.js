@@ -126,11 +126,17 @@ const EmployeeScheduleCalendar = () => {
 			); // Wyloguj dane przed wysłaniem
 
 			// Wyślij dane do API
-			const response = await Api.post(`${config.apiUrl}appointment`, {
-				headers: {
-					Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-				},
-			});
+			const response = await Api.post(
+				`${config.apiUrl}appointment`,
+
+				appointmentData,
+
+				{
+					headers: {
+						Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+					},
+				}
+			);
 
 			console.log("Wizyta zapisana pomyślnie:", response.data); // Wyloguj odpowiedź serwera
 

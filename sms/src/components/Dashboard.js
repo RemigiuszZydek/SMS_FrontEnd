@@ -21,6 +21,10 @@ const Dashboard = () => {
 					<h2>Pracownicy</h2>
 					<p>Zarządzaj pracownikami</p>
 				</div>
+				<div className="window" onClick={() => navigate("/customers")}>
+					<h2>Klienci</h2>
+					<p>Zarządzaj klientami</p>
+				</div>
 				<div className="window" onClick={() => navigate("/services")}>
 					<h2>Usługi</h2>
 					<p>Zarządzaj usługami</p>
