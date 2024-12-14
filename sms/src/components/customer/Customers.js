@@ -3,17 +3,19 @@ import { useNavigate } from "react-router-dom";
 import Api from "../../api/Api";
 import config from "../../config";
 import RegisterCustomerModal from "./RegisterCustomerModal";
+import EditCustomerModal from "./EditCustomerModal"; // Import EditCustomerModal
 import "../../styles/components/customer/Customers.css";
 
 const Customers = () => {
-	const [salons, setSalons] = useState([]); // Lista salonów
-	const [selectedSalonId, setSelectedSalonId] = useState(""); // Wybrany salon
-	const [customers, setCustomers] = useState([]); // Lista klientów
-	const [isModalOpen, setIsModalOpen] = useState(false); // Stan modalu
-	const [error, setError] = useState(""); // Obsługa błędów
-	const navigate = useNavigate(); // Hook do nawigacji
+	const [salons, setSalons] = useState([]);
+	const [selectedSalonId, setSelectedSalonId] = useState("");
+	const [customers, setCustomers] = useState([]);
+	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [isEditModalOpen, setIsEditModalOpen] = useState(false); // Stan modalu edycji
+	const [selectedCustomer, setSelectedCustomer] = useState(null); // Wybrany klient
+	const [error, setError] = useState("");
+	const navigate = useNavigate();
 
-	// Pobierz listę salonów
 	const fetchSalons = async () => {
 		try {
 			const response = await Api.get(`${config.apiUrl}salon/list`, {
@@ -27,7 +29,6 @@ const Customers = () => {
 		}
 	};
 
-	// Pobierz listę klientów
 	const fetchCustomers = async () => {
 		if (!selectedSalonId) return;
 		try {
@@ -53,7 +54,6 @@ const Customers = () => {
 		fetchCustomers();
 	}, [selectedSalonId]);
 
-	// Usuń klienta
 	const handleDeleteCustomer = async (customerId) => {
 		try {
 			await Api.delete(`${config.apiUrl}customer/${customerId}`, {
@@ -61,13 +61,12 @@ const Customers = () => {
 					Authorization: `Bearer ${localStorage.getItem("authToken")}`,
 				},
 			});
-			fetchCustomers(); // Odśwież listę klientów
+			fetchCustomers();
 		} catch (error) {
 			handleError(error, "Nie udało się usunąć klienta.");
 		}
 	};
 
-	// Obsługa błędów API
 	const handleError = (error, defaultMessage) => {
 		if (error.response) {
 			setError(error.response.data.message || defaultMessage);
@@ -78,15 +77,14 @@ const Customers = () => {
 		}
 	};
 
-	// Dodaj nowego klienta
-	const handleAddCustomer = (newCustomer) => {
+	const handleAddCustomer = () => {
 		setIsModalOpen(false);
 		fetchCustomers();
 	};
 
-	// Obsługa kliknięcia w klienta
-	const handleCustomerClick = (customerId) => {
-		navigate(`/customer/${customerId}`); // Przekierowanie do szczegółów klienta
+	const handleCustomerClick = (customer) => {
+		setSelectedCustomer(customer); // Ustaw wybranego klienta
+		setIsEditModalOpen(true); // Otwórz modal edycji
 	};
 
 	return (
@@ -115,7 +113,7 @@ const Customers = () => {
 							<li
 								key={customer.id}
 								className="customer-item"
-								onClick={() => handleCustomerClick(customer.id)} // Obsługa kliknięcia w klienta
+								onClick={() => handleCustomerClick(customer)} // Przekaż klienta do funkcji
 							>
 								<div className="customer-name">
 									<p>
@@ -124,7 +122,7 @@ const Customers = () => {
 									<button
 										className="delete-button"
 										onClick={(e) => {
-											e.stopPropagation(); // Zapobiegaj propagacji kliknięcia
+											e.stopPropagation();
 											handleDeleteCustomer(customer.id);
 										}}
 									>
@@ -141,7 +139,14 @@ const Customers = () => {
 				<RegisterCustomerModal
 					onClose={() => setIsModalOpen(false)}
 					onAddCustomer={handleAddCustomer}
-					selectedSalonId={selectedSalonId} // Przekazanie salonId do modalu
+					selectedSalonId={selectedSalonId}
+				/>
+			)}
+			{isEditModalOpen && selectedCustomer && (
+				<EditCustomerModal
+					customer={selectedCustomer}
+					onClose={() => setIsEditModalOpen(false)}
+					onSave={fetchCustomers} // Odśwież listę klientów po zapisaniu
 				/>
 			)}
 		</div>
