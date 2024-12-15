@@ -7,12 +7,14 @@ export const fetchAvailability = async (employeeId, startDate, endDate) => {
 		console.log("Request URL:", url);
 
 		// Wykonanie żądania
-		const response = await fetch(url, {
-			method: "GET",
+		const response = await Api.get(url, {
 			headers: {
 				"Content-Type": "application/json", // Nagłówek JSON
 			},
 		});
+
+		// Logowanie całej odpowiedzi
+		console.log("API Response:", response);
 
 		// Jeśli odpowiedź jest 404 (brak danych), zwróć pustą listę
 		if (response.status === 404) {
@@ -20,20 +22,30 @@ export const fetchAvailability = async (employeeId, startDate, endDate) => {
 			return { success: true, data: [] }; // Zwracamy pustą listę jako dane
 		}
 
-		// Jeśli odpowiedź nie jest OK, ale to nie jest 404, loguj błąd
-		if (!response.ok) {
-			const errorText = await response.text();
-			console.error("Response error text:", errorText);
+		// Jeśli odpowiedź jest inna niż 200, loguj błąd
+		if (response.status !== 200) {
+			console.error("Unexpected response status:", response.status);
 			throw new Error(`Błąd HTTP ${response.status}: ${response.statusText}`);
 		}
 
-		// Zwrot przetworzonej odpowiedzi
-		const data = await response.json();
-		console.log("Response data:", data);
-		return data;
+		// Zwrot przetworzonych danych
+		const data = response.data; // Dane są już w formacie JSON
+		console.log("Response JSON data:", data);
+		return { success: true, data };
 	} catch (error) {
-		console.error("BLAD W FETCHAVAILABILITY:", error);
-		return { success: false, data: [] }; // Zwracamy pustą listę w przypadku błędu
+		// Logowanie błędu w try/catch
+		console.error("Błąd w funkcji fetchAvailability:", error);
+
+		// Logowanie szczegółowych danych o błędzie, jeśli istnieją
+		if (error.response) {
+			console.error("Error response:", error.response);
+		}
+		if (error.request) {
+			console.error("Error request:", error.request);
+		}
+
+		// Zwracamy pustą listę, aby zapobiec awarii aplikacji
+		return { success: false, data: [] };
 	}
 };
 
